@@ -21,6 +21,7 @@ const flash = require('connect-flash');
 const passport = require('passport');
 const localStrategy = require('passport-local');
 const User = require('./models/user');
+const mongoSanitize = require('express-mongo-sanitize');
 
 
 mongoose.connect('mongodb://localhost:27017/yelpcamp', {useNewUrlParser: true, useUnifiedTopology: true});
@@ -50,7 +51,7 @@ const sessionConfig = {
 	}
 }
 
-
+app.use(mongoSanitize());
 
 app.use(session(sessionConfig));
 app.use(flash());
@@ -61,15 +62,18 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.get('/', (req, res)=>{
-	res.send('HOME')
-})
+
 
 app.use((req, res, next)=>{
 	res.locals.currentUser = req.user;
 	res.locals.success = req.flash('success');
 	res.locals.error = req.flash('error');
 	next();
+})
+
+
+app.get('/', (req, res)=>{
+	res.render('home')
 })
 
 app.use('/campgrounds', campgroundRoutes);

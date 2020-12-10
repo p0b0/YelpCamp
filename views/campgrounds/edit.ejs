@@ -35,7 +35,7 @@
 		<div class="col-6 offset-3">
 		<h1 class="text-center">Edit campground</h1>
 
-		<form action="/campgrounds/<%= campground._id %>?_method=PUT" method="post" class="validated-form" novalidate>
+		<form action="/campgrounds/<%= campground._id %>?_method=PUT" method="post" class="validated-form" novalidate enctype="multipart/form-data">
 
 		<div class="mb-3">
 			<label class="form-label" for="campgrounds[name]">Name: </label>
@@ -66,13 +66,6 @@
 		</div>
 		</div>
 
-		<div class="mb-3">
-			<label class="form-label" for="campgrounds[image]">Image Url: </label>
-			<input class="form-control" type="text" name="campgrounds[image]" value="<%= campground.image %>" required>
-			<div class="valid-feedback">
-				Looks good!
-			  </div>
-		</div>
 
 		<div class="mb-3">
 			<label class="form-label" for="campgrounds[description]">Description: </label>
@@ -82,7 +75,26 @@
 			  </div>
 		</div>
 
-		
+		<div class="input-group mb-3">
+			<div class="custom-file">
+			  <input type="file" class="custom-file-input" id="image" name="image" multiple>
+			  <label class="custom-file-label" for="image" aria-describedby="inputGroupFileAddon02">Add more images</label>
+			</div>
+			<div class="input-group-append">
+			  <span class="input-group-text" id="image">Upload</span>
+			</div>
+		  </div>
+
+		<div class="mb-3">
+			<% campground.images.forEach(function(img, i){  %>
+				<img src="<%= img.thumbnail %>" class="img-thumbnail">
+				<div class="form-check-inline">
+					<input type="checkbox" id="image-<%= i %>" name="deleteImage[]" value="<%= img.filename %>">
+					<label for="image-<%= i %>">Delete?</label>
+				</div>
+				
+				<% }) %>
+		</div>
 
 		<div class="mb-3">
 		<button class="btn btn-info">Update Campground</button>

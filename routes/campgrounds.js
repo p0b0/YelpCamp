@@ -21,7 +21,7 @@ router.get("/new", isLoggedIn, campgrounds.renderNewForm);
 
 router.route("/:id")
     .get( catchError(campgrounds.showCampground))
-    .put( isLoggedIn, isAuthor, catchError(campgrounds.updateCampground))
+    .put( isLoggedIn, isAuthor, upload.array("image"), catchError(campgrounds.updateCampground))
     .delete( catchError(campgrounds.deleteCampground));
 
 
