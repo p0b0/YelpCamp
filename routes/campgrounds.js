@@ -4,10 +4,11 @@ const catchError = require('../utils/catchError');
 const ExpressError = require('../utils/ExpressError');
 const Campground = require('../models/campgrounds');
 const flash = require('connect-flash');
-const { isLoggedIn, isAuthor } = require('../middleware');
+const { isLoggedIn, isAuthor, validateCampground } = require('../middleware');
 const campgrounds = require('../controllers/campgrounds.js');
 const multer = require('multer');
 const {storage} = require('../cloudinary/index');
+
 
 const upload = multer({storage});
 
@@ -15,13 +16,13 @@ const upload = multer({storage});
 
 router.route("/")
     .get(catchError(campgrounds.index))
-    .post(isLoggedIn, upload.array("image"), catchError(campgrounds.createCampground));
+    .post(isLoggedIn, upload.array("image"), validateCampground, catchError(campgrounds.createCampground));
 
 router.get("/new", isLoggedIn, campgrounds.renderNewForm);
 
 router.route("/:id")
     .get( catchError(campgrounds.showCampground))
-    .put( isLoggedIn, isAuthor, upload.array("image"), catchError(campgrounds.updateCampground))
+    .put( isLoggedIn, isAuthor, upload.array("image"), validateCampground, catchError(campgrounds.updateCampground))
     .delete( catchError(campgrounds.deleteCampground));
 
 

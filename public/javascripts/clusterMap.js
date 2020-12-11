@@ -5,6 +5,9 @@ style: 'mapbox://styles/mapbox/dark-v10',
 center: [-103.59179687498357, 40.66995747013945],
 zoom: 3
 });
+
+const nav = new mapboxgl.NavigationControl();
+map.addControl(nav, 'top-left');
  
 map.on('load', function () {
 // Add a new source from our GeoJSON data and
@@ -133,3 +136,4 @@ map.on('mouseleave', 'clusters', function () {
 map.getCanvas().style.cursor = '';
 });
 });
+

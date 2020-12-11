@@ -1,5 +1,7 @@
 const Campground = require('./models/campgrounds');
 const Review = require('./models/review');
+const {campgroundSchemaValidator, reviewSchemaValidator} = require('./schemas.js');
+const ExpressError = require('./utils/ExpressError.js');
 
 module.exports.isLoggedIn = (req, res, next) => {
     console.log("req.user:", req.user);
@@ -34,3 +36,25 @@ module.exports.isReviewAuthor = async(req, res, next)=>{
 		next();}
 }
  
+
+
+module.exports.validateCampground = (req, res, next)=>{
+	
+	const {error} = campgroundSchemaValidator.validate(req.body);
+	if (error) {
+		const msg = error.details.map(el => el.message).join(',');
+		throw new ExpressError(msg, 400);
+	} else {
+		next();
+	}
+}
+
+module.exports.validateReview = (req, res, next)=>{
+	const {error} = reviewSchemaValidator.validate(req.body);
+	if (error) {
+		const msg = error.details.map(el => el.message).join(',');
+		throw new ExpressError(msg, 400);
+	} else {
+		next();
+	}
+}
