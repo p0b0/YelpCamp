@@ -6,7 +6,7 @@
 <body> -->
 
 	<% layout('layouts/boilerplate') %>
-	<link rel="stylesheets" href="/public/stylesheets/stars.css">
+	<link rel="stylesheets" href="/stylesheets/stars.css">
 
 	<div class='row'>
 		<div class="col-6">
@@ -80,9 +80,9 @@
 			<div class="mb-3 card-body">
 			  <h5 class="card-title">Rating:<%= review.rating%></h5>
 			  <h3>Rated element name</h3>
-			  <p class="starability-result" data-rating="3">
-				Rated: 3 stars
-			  </p>
+  <p class="starability-result" data-rating="3">
+    Rated: 3 stars
+  </p>
 			  <h6 class="card-subtitle mb-2 text-muted">By <%= review.author.username %></h6>
 			  <p class="card-text">Review: <%= review.body%></p>
 			  <% if (currentUser && review.author.equals(currentUser._id)) { %>
