@@ -25,7 +25,17 @@ const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
 
 
-mongoose.connect('mongodb://localhost:27017/yelpcamp', {useNewUrlParser: true, useUnifiedTopology: true});
+const localDbPath = 'mongodb://localhost:27017/yelpcamp';
+
+const dbUrl = process.env.DB_URL;
+
+mongoose.connect(localDbPath, 
+	{useNewUrlParser: true,
+	useUnifiedTopology: true,
+	useCreateIndex: true,
+	useFindAndModify: false
+});
+
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
