@@ -57,9 +57,12 @@ const sessionConfig = {
 app.use(mongoSanitize());
 
 
-app.use(helmet({
-	contentSecurityPolicy : false
-}));
+
+app.use(
+	helmet({
+	  contentSecurityPolicy: false,
+	})
+  );
 
 
 // const scriptSrcUrls = [
