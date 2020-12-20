@@ -83,14 +83,6 @@ const sessionConfig = {
 app.use(mongoSanitize());
 
 
-
-// app.use(
-// 	helmet({
-// 	  contentSecurityPolicy: false,
-// 	})
-//   );
-
-
 const scriptSrcUrls = [
     "https://stackpath.bootstrapcdn.com",
     "https://api.tiles.mapbox.com",
@@ -165,11 +157,6 @@ app.use('/campgrounds', campgroundRoutes);
 app.use('/campgrounds/:id/reviews', reviewRoutes);
 app.use('/', authRoutes);
 
-app.get('/fakeUser', async (req, res)=>{
-	const user = new User({ email: 'blablabla@gmail.com', username: 'slobroyo'})
-	const newUser = await User.register(user, 'chicken')
-	res.send(newUser);
-})
 
 app.all("*", (req, res, next)=>{
 	next( new ExpressError("Page Not Found", 404));
