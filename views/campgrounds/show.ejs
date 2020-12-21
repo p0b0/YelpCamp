@@ -6,11 +6,14 @@
 <body> -->
 
 	<% layout('layouts/boilerplate') %>
-	<link rel="stylesheets" href="/stylesheets/stars.css">
+
+
+	<!-- <link rel="stylesheets" href="/stylesheets/stars.css"> -->
 
 	<div class='row'>
+
 		<div class="col-6">
-			<div id='map' style='width: 400px; height: 300px;'></div>
+			<!-- <div id='map' style='width: 400px; height: 300px;'></div> -->
 			<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
 				<div class="carousel-inner">
 					<% campground.images.forEach((img, i) => { %>
@@ -56,8 +59,20 @@
 				</div>
 				<% } %>
 			  </div>
+
+			
+
+
 		</div>
+
+		
+
+	</div>
+
+
+	
 		<div class="col-6">
+			<div id='map' style="height: 200px; width: 200;"></div>
 			<% if(currentUser) { %>
 			<h2>Leave a review</h2>
 			<form action="/campgrounds/<%= campground._id %>/reviews" method="POST" class="mb-3 validated-form"  novalidate>
@@ -80,9 +95,9 @@
 			<div class="mb-3 card-body">
 			  <h5 class="card-title">Rating:<%= review.rating%></h5>
 			  <h3>Rated element name</h3>
-  <p class="starability-result" data-rating="3">
-    Rated: 3 stars
-  </p>
+				<p class="starability-result" data-rating="3">
+					Rated: 3 stars
+				</p>
 			  <h6 class="card-subtitle mb-2 text-muted">By <%= review.author.username %></h6>
 			  <p class="card-text">Review: <%= review.body%></p>
 			  <% if (currentUser && review.author.equals(currentUser._id)) { %>
@@ -95,7 +110,8 @@
 		  </div>
 			<% } %>
 		  </div>
-	</div>
+	
+
 
 	<script>const campground = <%- JSON.stringify(campground) %></script>
 
