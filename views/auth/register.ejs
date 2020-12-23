@@ -1,35 +1,52 @@
 <% layout('layouts/boilerplate') %>
 
-<h1>Registration</h1>
+<div class="row">
+  <div class="col-4 offset-4">
 
-<form action="/register" method="POST" class="validated-form" novalidate>
+<div class="card" >
+  <!-- <img src="..." class="card-img-top" alt="..."> -->
+ <div class="card-body">
+  <h5 class="card-title">Register</h5>
 
-    <div class="mb-3">
-        <label class="form-label" for="username">Username: </label>
-        <input class="form-control" type="text" name="username" id="username" required>
-        <div class="valid-feedback">
-            Looks good!
-          </div>
-    </div>
+  <form action="/register" method="POST" class="validated-form" novalidate>
+  
+      <div class="mb-3">
+          <label class="form-label" for="username">Username: </label>
+          <input class="form-control" type="text" name="username" id="username" required>
+          <div class="valid-feedback">
+              Looks good!
+            </div>
+      </div>
+  
+      <div class="mb-3">
+          <label class="form-label" for="email">E-mail: </label>
+          <input class="form-control" type="email" name="email" id="email" required>
+          <div class="valid-feedback">
+              Looks good!
+            </div>
+      </div>
+  
+      <div class="mb-3">
+          <label class="form-label" for="password">Password: </label>
+          <input class="form-control" type="password" name="password" id="password" required>
+          <div class="valid-feedback">
+              Looks good!
+            </div>
+      </div>
+      
+      <div class="mb-3">
+      <button class="btn btn-success">Register</button>
+      </div>
+  
+  </form>
+</div>
+  </div>
+</div>
+</div>
 
-    <div class="mb-3">
-        <label class="form-label" for="email">E-mail: </label>
-        <input class="form-control" type="email" name="email" id="email" required>
-        <div class="valid-feedback">
-            Looks good!
-          </div>
-    </div>
 
-    <div class="mb-3">
-        <label class="form-label" for="password">Password: </label>
-        <input class="form-control" type="password" name="password" id="password" required>
-        <div class="valid-feedback">
-            Looks good!
-          </div>
-    </div>
-    
-    <div class="mb-3">
-		<button class="btn btn-success">Register</button>
-		</div>
 
-</form>
+
+
+
+
