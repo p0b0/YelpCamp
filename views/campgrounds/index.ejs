@@ -1,9 +1,4 @@
-<!-- <!DOCTYPE html>
-<html>
-<head>
-	<title>campgrounds</title>
-</head>
-<body> -->
+
 
 	<% layout('layouts/boilerplate') %>
 
@@ -22,10 +17,10 @@
 			<div class="card mb-3" >
 				<div class="row">
 					<div class="col-md-4">
-						<% if(camp.images.length>1) { %>
+						<% if(camp.images.length>0) { %>
 						<img class="img-fluid" src="<%=camp.images[0].url%>" alt="">
 						<% } else { %>
-							<img class="img-fluid" src="https://res.cloudinary.com/p0b0yelp/image/upload/v1606897464/Yelpcamp/xf2iuwoz6yfufximh06m.jpg" alt="">
+							<img class="img-fluid" src="https://res.cloudinary.com/p0b0yelp/image/upload/v1608198090/Yelpcamp/gihfcvgqn8xnz5pp78y9.jpg" alt="">
 							<% } %>
 					</div>
 					<div class="col-mg-8">
@@ -49,6 +44,3 @@
 
 	<script src="/javascripts/clusterMap.js"></script>
 
-<!-- 
-</body>
-</html> -->
