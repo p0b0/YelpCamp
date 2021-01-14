@@ -1,5 +1,7 @@
 const Joi = require('joi');
 
+// Setting up constraints for data that we accept to be stored in the db
+
 module.exports.campgroundSchemaValidator = Joi.object({
     campgrounds: Joi.object({
         name: Joi.string().required(),

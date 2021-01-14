@@ -12,7 +12,6 @@ const mongoose = require('mongoose');
 const Campground = require('./models/campgrounds');
 const Review = require('./models/review'); 
 const methodOverride = require('method-override');
-// const bodyParser = require('body-parser')
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
 const authRoutes = require('./routes/auth');
@@ -26,7 +25,7 @@ const helmet = require('helmet');
 const MongoStore = require('connect-mongo')(session);
 
 
-
+// Connection with MongoDB database through Mongoose 
 
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/yelpcamp'
 
@@ -47,7 +46,7 @@ app.engine("ejs", ejsMate);
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"))
-// app.use(bodyParser.urlencoded({ extended: false }))
+
 
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride('_method'));
@@ -65,6 +64,7 @@ store.on('error', function(e) {
 	console.log("session store error!", e)
 })
 
+// configuring session parameters
 
 const sessionConfig = {
 	store,
@@ -80,8 +80,12 @@ const sessionConfig = {
 	}
 }
 
+// db sanitization for avoiding cross site scripting and db injections
+
 app.use(mongoSanitize());
 
+
+// Setting up configuration for Content Security Policy for Helmet
 
 const scriptSrcUrls = [
     "https://stackpath.bootstrapcdn.com",
@@ -121,7 +125,7 @@ app.use(
                 "'self'",
                 "blob:",
                 "data:",
-                "https://res.cloudinary.com/p0b0yelp/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT! 
+                "https://res.cloudinary.com/p0b0yelp/", 
                 "https://images.unsplash.com",
             ],
             fontSrc: ["'self'", ...fontSrcUrls],
@@ -129,8 +133,13 @@ app.use(
     })
 );
 
+
+
 app.use(session(sessionConfig));
 app.use(flash());
+
+// Setting up authentication
+
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new localStrategy(User.authenticate()));
@@ -138,7 +147,7 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
+// Creating locals in the response object
 
 app.use((req, res, next)=>{
 	res.locals.currentUser = req.user;
@@ -147,16 +156,20 @@ app.use((req, res, next)=>{
 	next();
 })
 
+// Home route
 
 app.get('/', (req, res)=>{
 	res.render('home')
 })
+
+// Seting up routes that are handled through routes file
 
 app.use('/campgrounds', campgroundRoutes);
 
 app.use('/campgrounds/:id/reviews', reviewRoutes);
 app.use('/', authRoutes);
 
+// Error routes
 
 app.all("*", (req, res, next)=>{
 	next( new ExpressError("Page Not Found", 404));
@@ -167,6 +180,9 @@ app.use((err, req, res, next)=>{
 	if (!err.message){ err.message = "Oh no!, Something went wrong!"}
 	res.status(statusCode).render('error', { err });
 })
+
+
+// Choosing development or production port and listening on it
 
 const port = process.env.PORT || '3000'
 

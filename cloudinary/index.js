@@ -1,11 +1,15 @@
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
+// Setting enviroment variables for connecting to cloudinary
+
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_KEY,
     api_secret: process.env.CLOUDINARY_SECRET
 });
+
+// Setting up a new storage with parameters
 
 const storage = new CloudinaryStorage({
     cloudinary,

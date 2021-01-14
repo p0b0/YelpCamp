@@ -3,6 +3,8 @@ const Review = require('./models/review');
 const {campgroundSchemaValidator, reviewSchemaValidator} = require('./schemas.js');
 const ExpressError = require('./utils/ExpressError.js');
 
+// Middleware used in routes for checking if a user is logged in
+
 module.exports.isLoggedIn = (req, res, next) => {
     console.log("req.user:", req.user);
     if(!req.isAuthenticated()) {
@@ -13,7 +15,7 @@ module.exports.isLoggedIn = (req, res, next) => {
     next();
 }
 
-
+// Middleware used in routes for checking if a user is the creator of the content "Campgrounds"
 
 module.exports.isAuthor = async(req, res, next)=>{
 	const {id} = req.params;
@@ -25,6 +27,7 @@ module.exports.isAuthor = async(req, res, next)=>{
 		next();}
 }
 
+// Middleware used in routes for checking if a user is the creator of the content "Reviews"
 
 module.exports.isReviewAuthor = async(req, res, next)=>{
 	const {id, reviewId} = req.params;
@@ -36,7 +39,7 @@ module.exports.isReviewAuthor = async(req, res, next)=>{
 		next();}
 }
  
-
+// Joi validation for data that will be stored in the db for content "Campground"
 
 module.exports.validateCampground = (req, res, next)=>{
 	
@@ -48,6 +51,8 @@ module.exports.validateCampground = (req, res, next)=>{
 		next();
 	}
 }
+
+// Joi validation for data that will be stored in the db for content "Reviews"
 
 module.exports.validateReview = (req, res, next)=>{
 	const {error} = reviewSchemaValidator.validate(req.body);
